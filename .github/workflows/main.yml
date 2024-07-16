@@ -1,32 +1,32 @@
-# Al Bawani Ltd - Transportation Allowance vs. Vehicle Survey
+```javascript
+function createTransportationSurveyForm() {
+  var form = FormApp.create('Al Bawani Ltd - Transportation Allowance vs. Vehicle Survey')
+    .setDescription('This survey aims to gather information on the transportation preferences of employees in the Transportation Department at Al Bawani Ltd. Please fill out the form to indicate whether you are using the transportation allowance or prefer a company vehicle. Your input is crucial for our planning and logistics.');
 
-**Description**:
+  form.addTextItem()
+    .setTitle('Employee Name')
+    .setRequired(true);
 
-## Questions
+  form.addTextItem()
+    .setTitle('Badge Number')
+    .setRequired(true);
 
-1. **Employee Name**  
-   Type: Short Answer  
-   Required: Yes
+  form.addTextItem()
+    .setTitle('Project/Department')
+    .setRequired(true);
 
-2. **Badge Number**  
-   Type: Short Answer  
-   Required: Yes
+  form.addMultipleChoiceItem()
+    .setTitle('Transportation Preference')
+    .setChoiceValues(['Transportation Allowance', 'Company Vehicle'])
+    .setRequired(true);
 
-3. **Project/Department**  
-   Type: Short Answer  
-   Required: Yes
+  form.addTextItem()
+    .setTitle('Signature')
+    .setRequired(true);
 
-4. **Transportation Preference**  
-   Type: Multiple Choice  
-   Options:  
-   - Transportation Allowance  
-   - Company Vehicle  
-   Required: Yes
+  form.addDateItem()
+    .setTitle('Date')
+    .setRequired(true);
 
-5. **Signature**  
-   Type: Short Answer  
-   Required: Yes
-
-6. **Date**  
-   Type: Date  
-   Required: Yes
+  Logger.log('Form URL: ' + form.getPublishedUrl());
+}
