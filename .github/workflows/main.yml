@@ -1,32 +1,32 @@
-```javascript
-function createTransportationSurveyForm() {
-  var form = FormApp.create('Al Bawani Ltd - Transportation Allowance vs. Vehicle Survey')
-    .setDescription('This survey aims to gather information on the transportation preferences of employees in the Transportation Department at Al Bawani Ltd. Please fill out the form to indicate whether you are using the transportation allowance or prefer a company vehicle. Your input is crucial for our planning and logistics.');
+name: Deploy Google Apps Script
 
-  form.addTextItem()
-    .setTitle('Employee Name')
-    .setRequired(true);
+on:
+  push:
+    branches:
+      - main
 
-  form.addTextItem()
-    .setTitle('Badge Number')
-    .setRequired(true);
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
-  form.addTextItem()
-    .setTitle('Project/Department')
-    .setRequired(true);
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-  form.addMultipleChoiceItem()
-    .setTitle('Transportation Preference')
-    .setChoiceValues(['Transportation Allowance', 'Company Vehicle'])
-    .setRequired(true);
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
 
-  form.addTextItem()
-    .setTitle('Signature')
-    .setRequired(true);
+    - name: Install clasp
+      run: npm install -g @google/clasp
 
-  form.addDateItem()
-    .setTitle('Date')
-    .setRequired(true);
+    - name: Authenticate clasp
+      env:
+        CLASPRC_JSON: ${{ secrets.CLASPRC_JSON }}
+      run: |
+        echo $CLASPRC_JSON > ~/.clasprc.json
 
-  Logger.log('Form URL: ' + form.getPublishedUrl());
-}
+    - name: Push script
+      run: |
+        clasp push
